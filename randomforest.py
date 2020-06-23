@@ -1,13 +1,9 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jun 22 17:03:14 2020
-
-@author: Gavin
-"""
+#Random Forest Classification
 
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+
 
 dataset = pd.read_csv('')
 X = dataset.iloc[:, :].values
@@ -28,11 +24,7 @@ from sklearn.ensemble import RandomForestClassifier
 classifier = RandomForestClassifier(n_estimators = 10, criterion = 'entropy', random_state = 0) #Might need to change n_estimators
 classifier.fit(X_train, Y_train)
 
-Y_pred = classifier.predict(X_test)
+classifier.score(X_train, Y_train)
+classifier.score(X_test, Y_test)
 
-# Making the Confusion Matrix
-from sklearn.metrics import confusion_matrix, accuracy_score
-cm = confusion_matrix(Y_test, Y_pred)
-print(cm)
-accuracy_score(Y_test, Y_pred)
 
