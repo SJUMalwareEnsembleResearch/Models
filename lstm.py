@@ -33,10 +33,13 @@ lstm = tf.keras.models.Sequential()
 #lstm.add(Dropout(0.2))
 
 #First Layer
-lstm.add(tf.keras.layers.LSTM(128, input_shape = (1000, 1), activation = 'relu', return_sequences = True))
+lstm.add(tf.keras.layers.LSTM(128, input_shape = (1001, 1), activation = 'relu', return_sequences = True))
 
 #Second Layer
 lstm.add(tf.keras.layers.LSTM(128, input_shape = (1000, 1), activation = 'relu'))
+
+#Third Layer
+lstm.add(tf.keras.layers.Dense(64, activation = 'relu'))
 
 #Third Layer
 lstm.add(tf.keras.layers.Dense(64, activation = 'relu'))
@@ -46,4 +49,4 @@ lstm.add(tf.keras.layers.Dense(units=11, activation='softmax')) # change activat
 
 # Training the lstm on the Training set and evaluating it on the Test set
 lstm.compile(optimizer = 'adam', loss = 'sparse_categorical_crossentropy', metrics = ['accuracy'])
-lstm.fit(X, Y, epochs = 10, validation_split = 0.25, batch_size = 500) ##need to change
+lstm.fit(X, Y, epochs = 10, validation_split = 0.25, batch_size = 250) ##need to change

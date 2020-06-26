@@ -51,7 +51,30 @@ accuracy_score(Y_test, Y_pred)
 from sklearn.metrics import precision_recall_fscore_support
 precision_recall_fscore_support(Y_test, Y_pred, average ='micro')
 precision_recall_fscore_support(Y_test, Y_pred, average ='macro')
-precision_recall_fscore_support(Y_test, Y_pred, average ='weighted')
+
+def plot_graphs(history, best):
+
+  plt.figure(figsize=[10,4])
+  # summarize history for accuracy
+  plt.subplot(121)
+  #plt.plot(history.history['acc'])
+  plt.plot(history.history['val_acc'])
+  plt.title('model accuracy across training\n best accuracy of %.02f'%best[1])
+  plt.ylabel('accuracy')
+  plt.xlabel('epoch')
+  plt.legend(['train', 'test'], loc='upper left')
+
+  # summarize history for loss
+  plt.subplot(122)
+  plt.plot(history.history['loss'])
+  plt.plot(history.history['val_loss'])
+  plt.title('model loss across training\n best loss of %.02f'%best[0])
+  plt.ylabel('loss')
+  plt.xlabel('epoch')
+  plt.legend(['train', 'test'], loc='upper left')
+  plt.show()
+
+
 
 
 
