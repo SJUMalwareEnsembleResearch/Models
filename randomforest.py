@@ -20,7 +20,7 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, rand
 
 
 #n_estimators = [500, 800, 1500, 2500, 5000]
-n_estimators = [300]
+n_estimators = [500]
 min_samples_split = [2, 5, 10, 15, 20]
 min_samples_leaf = [1, 2, 5, 10, 15]
 max_features = ['auto', 'sqrt','log2']
