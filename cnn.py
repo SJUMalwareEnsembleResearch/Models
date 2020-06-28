@@ -51,3 +51,25 @@ cnn.add(tf.keras.layers.Dense(units=11, activation='softmax')) # change activati
 # Training the CNN on the Training set and evaluating it on the Test set
 cnn.compile(optimizer = 'adam', loss = 'sparse_categorical_crossentropy', metrics = ['accuracy'])
 cnn.fit(X, Y, epochs = 25, validation_split = 0.25, batch_size = 1000) ##need to change
+
+def plot_graphs(history, best):
+
+  plt.figure(figsize=[10,4])
+  # summarize history for accuracy
+  plt.subplot(121)
+  #plt.plot(history.history['acc'])
+  plt.plot(history.history['val_acc'])
+  plt.title('model accuracy across training\n best accuracy of %.02f'%best[1])
+  plt.ylabel('accuracy')
+  plt.xlabel('epoch')
+  plt.legend(['train', 'test'], loc='upper left')
+
+  # summarize history for loss
+  plt.subplot(122)
+  plt.plot(history.history['loss'])
+  plt.plot(history.history['val_loss'])
+  plt.title('model loss across training\n best loss of %.02f'%best[0])
+  plt.ylabel('loss')
+  plt.xlabel('epoch')
+  plt.legend(['train', 'test'], loc='upper left')
+  plt.show()
