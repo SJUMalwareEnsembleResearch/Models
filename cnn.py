@@ -53,7 +53,6 @@ cnn.compile(optimizer = 'adam', loss = 'sparse_categorical_crossentropy', metric
 cnn.fit(X, Y, epochs = 25, validation_split = 0.25, batch_size = 1000) ##need to change
 
 def plot_graphs(history, best):
-
   plt.figure(figsize=[10,4])
   # summarize history for accuracy
   plt.subplot(121)
