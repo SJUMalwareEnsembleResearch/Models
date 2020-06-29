@@ -17,12 +17,6 @@ Y = le.fit_transform(Y)
 from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, random_state = 0)
 
-# Not needed for Adaboost
-# Feature Scaling
-# from sklearn.preprocessing import StandardScaler
-# sc = StandardScaler()
-# X_train = sc.fit_transform(X_train)
-# X_test = sc.transform(X_test)
 
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -31,4 +25,4 @@ classifier.fit(X_train, Y_train)
 
 
 print(classifier.score(X_train, Y_train))
-print(classifier.score(X_test, Y_test))
+print(classifier.score(X_test, Y_test))`
