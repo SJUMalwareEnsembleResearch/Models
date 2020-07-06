@@ -4,6 +4,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sn
 
 dataset = pd.read_csv('all_data2_new.csv')
 X = dataset.iloc[:, 34:].values
@@ -19,7 +20,7 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, rand
 
 
 #n_estimators = [100, 200, 300, 500, 800, 1000]
-n_estimators = [100]
+n_estimators = [200]
 learning_rate = [0.5, 1, 1.5, 2]
 algorithm = ['SAMME', 'SAMME.R']
 
@@ -38,9 +39,21 @@ print(RFC_random.best_params_)
 
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
-classifier = AdaBoostClassifier(n_estimators = 200, learning_rate = 0.5, algorithm = 'SAMME') ##Might need to change n_estimators
+classifier = AdaBoostClassifier(n_estimators = 1000, learning_rate = 0.5, algorithm = 'SAMME') ##Might need to change n_estimators
 classifier.fit(X_train, Y_train)
+Y_pred = classifier.predict(X_test)
 
 
-print(classifier.score(X_train, Y_train))
-print(classifier.score(X_test, Y_test))
+from sklearn.metrics import accuracy_score
+accuracy_score(Y_train, classifier.predict(X_train))
+accuracy_score(Y_test, Y_pred)
+
+from sklearn.metrics import confusion_matrix
+families = [ 'ADLOAD', 'AGENT' , 'ALLAPLE_A', 'BHO', 'BIFROSE', 'CEEINJECT', 'CYCBOT_G','FAKEREAN', 'HOTBAR', 'INJECTOR',
+            'LOLYDA_BF', 'ONLINEGAMES', 'RENOS', 'RIMECUD_A', 'SMALL', 'STARTPAGE', 'TOGA_RFN', 'VB', 'VBINJECT',
+            'VOBFUS', 'VUNDO', 'WINTRIM_BX', 'WINWEBSEC', 'ZBOT']
+cm = confusion_matrix(Y_test, Y_pred)
+df_cm = pd.DataFrame(cm, index = [i for i in families],
+                  columns = [i for i in families])
+plt.figure(figsize = (25,17.5))
+sn.heatmap(df_cm, annot=True)

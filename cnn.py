@@ -10,10 +10,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import tensorflow as tf
+print(len(tf.config.experimental.list_physical_devices('GPU')))
 
-dataset = pd.read_csv('all_data.csv')
-X = dataset.iloc[:, 33:]
-Y = dataset.iloc[:, 0]
+dataset = pd.read_csv('all_data2_new.csv')
+X = dataset.iloc[:, 34:]
+Y = dataset.iloc[:, 1]
 X = X/30 #Check if there are 30 different opcodes
 X = np.expand_dims(X, 2)
 print(X.shape)
@@ -32,25 +33,28 @@ print(X_train.shape[2])
 cnn = tf.keras.models.Sequential()
 
 #First Layer
-cnn.add(tf.keras.layers.Conv1D(filters=32, kernel_size=3, activation ='relu', input_shape= (1000, 1)))
+cnn.add(tf.keras.layers.Conv1D(filters=16, kernel_size=3, activation ='relu', input_shape= (1000, 1)))
 cnn.add(tf.keras.layers.MaxPool1D(pool_size=2, strides=2))
+cnn.add(tf.keras.layers.Dropout(0.2))
 
 #Second Layer
-cnn.add(tf.keras.layers.Conv1D(filters=32, kernel_size=3, activation='relu'))
+cnn.add(tf.keras.layers.Conv1D(filters=16, kernel_size=3, activation='relu'))
 cnn.add(tf.keras.layers.MaxPool1D(pool_size=2, strides=2))
+cnn.add(tf.keras.layers.Dropout(0.2))
 
 #Flattening - Not sure if needed
 cnn.add(tf.keras.layers.Flatten())
 
 #Full Connection
 cnn.add(tf.keras.layers.Dense(units=128, activation='relu'))
+cnn.add(tf.keras.layers.Dense(units=128, activation='relu'))
 
 #Output Layer
-cnn.add(tf.keras.layers.Dense(units=11, activation='softmax')) # change activation to soft-max?
+cnn.add(tf.keras.layers.Dense(units=24, activation='softmax')) # change activation to soft-max?
 
 # Training the CNN on the Training set and evaluating it on the Test set
 cnn.compile(optimizer = 'adam', loss = 'sparse_categorical_crossentropy', metrics = ['accuracy'])
-cnn.fit(X, Y, epochs = 25, validation_split = 0.25, batch_size = 1000) ##need to change
+cnn.fit(X, Y, epochs = 100, validation_split = 0.25, batch_size = 1000) ##need to change
 
 def plot_graphs(history, best):
   plt.figure(figsize=[10,4])

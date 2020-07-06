@@ -20,7 +20,7 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, rand
 
 
 #n_estimators = [500, 800, 1500, 2500, 5000]
-n_estimators = [100]
+n_estimators = [300]
 min_samples_split = [2, 5, 10, 15, 20]
 min_samples_leaf = [1, 2, 5, 10, 15]
 max_features = ['auto', 'sqrt','log2']
@@ -36,13 +36,13 @@ grid_param = {'n_estimators': n_estimators, 'max_features': max_features, 'max_d
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import RandomizedSearchCV
 classifier = RandomForestClassifier(random_state = 0)
-RFC_random = RandomizedSearchCV(estimator = classifier, param_distributions = grid_param, n_iter = 500, verbose = 2, random_state = 42, n_jobs = -1)
+RFC_random = RandomizedSearchCV(estimator = classifier, param_distributions = grid_param, n_iter = 500, verbose = 2, random_state = 42, n_jobs = 1)
 RFC_random.fit(X, Y)
 print(RFC_random.best_score_)
 print(RFC_random.best_params_)
 
 from sklearn.ensemble import RandomForestClassifier
-classifier = RandomForestClassifier(n_estimators = 300, min_samples_split = 2, min_samples_leaf = 2, max_features = 'sqrt', max_depth = 30)
+classifier = RandomForestClassifier(n_estimators = 100, min_samples_split = 10, min_samples_leaf = 2, max_features = 'auto', max_depth = 30)
 classifier.fit(X_train, Y_train)
 Y_pred = classifier.predict(X_test)
 
