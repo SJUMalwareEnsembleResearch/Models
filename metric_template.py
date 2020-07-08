@@ -8,8 +8,8 @@ Created on Thu Jun 25 16:14:17 2020
 #Confusion Matrix
 from sklearn.metrics import confusion_matrix
 families = [ 'ADLOAD', 'AGENT' , 'ALLAPLE_A', 'BHO', 'BIFROSE', 'CEEINJECT', 'CYCBOT_G','FAKEREAN', 'HOTBAR', 'INJECTOR',
-            'LOLYDA_BF', 'ONLINEGAMES', 'RENOS', 'RIMECUD_A', 'SMALL', 'STARTPAGE', 'TOGA_RFN', 'VB', 'VBINJECT',
-            'VOBFUS', 'VUNDO', 'WINTRIM_BX', 'WINWEBSEC', 'ZBOT']
+            'ONLINEGAMES', 'RENOS', 'RIMECUD_A', 'SMALL', 'TOGA_RFN', 'VB', 'VBINJECT',
+            'VOBFUS', 'VUNDO', 'WINWEBSEC', 'ZBOT']
 cm = confusion_matrix(Y_test, Y_pred)
 df_cm = pd.DataFrame(cm, index = [i for i in families],
                   columns = [i for i in families])
