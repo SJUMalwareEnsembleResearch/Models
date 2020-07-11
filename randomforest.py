@@ -42,19 +42,11 @@ print(RFC_random.best_score_)
 print(RFC_random.best_params_)
 
 from sklearn.ensemble import RandomForestClassifier
-classifier = RandomForestClassifier(n_estimators = 100, min_samples_split = 10, min_samples_leaf = 2, max_features = 'auto', max_depth = 30)
+classifier = RandomForestClassifier(n_estimators = 100, min_samples_split = 10, min_samples_leaf = 1, max_features = 'auto', max_depth = 30)
 classifier.fit(X_train, Y_train)
 Y_pred = classifier.predict(X_test)
 
 
-
-#Confusion Matrix
-from sklearn.metrics import confusion_matrix
-cm = confusion_matrix(Y_test, Y_pred)
-df_cm = pd.DataFrame(cm, index = [i for i in "ABCDEFGHIJK"],
-                  columns = [i for i in "ABCDEFGHIJK"])
-plt.figure(figsize = (10,7))
-sn.heatmap(df_cm, annot=True)
 
 #Overall Accuracy
 from sklearn.metrics import accuracy_score
@@ -65,6 +57,17 @@ accuracy_score(Y_test, Y_pred)
 from sklearn.metrics import precision_recall_fscore_support
 precision_recall_fscore_support(Y_test, Y_pred, average ='micro')
 precision_recall_fscore_support(Y_test, Y_pred, average ='macro')
+precision_recall_fscore_support(Y_test, Y_pred, average ='weighted')
+
+from sklearn.metrics import confusion_matrix
+families = [ 'ADLOAD', 'AGENT' , 'ALLAPLE_A', 'BHO', 'BIFROSE', 'CEEINJECT', 'CYCBOT_G','FAKEREAN', 'HOTBAR', 'INJECTOR',
+            'ONLINEGAMES', 'RENOS', 'RIMECUD_A', 'SMALL', 'TOGA_RFN', 'VB', 'VBINJECT',
+            'VOBFUS', 'VUNDO', 'WINWEBSEC', 'ZBOT']
+cm = confusion_matrix(Y_test, Y_pred)
+df_cm = pd.DataFrame(cm, index = [i for i in families],
+                  columns = [i for i in families])
+plt.figure(figsize = (20,14))
+sn.heatmap(df_cm, annot=True)
 
 
 
