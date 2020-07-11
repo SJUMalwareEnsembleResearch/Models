@@ -31,6 +31,7 @@ families = [ 'ADLOAD', 'AGENT' , 'ALLAPLE_A', 'BHO', 'BIFROSE', 'CEEINJECT', 'CY
             'ONLINEGAMES', 'RENOS', 'RIMECUD_A', 'SMALL', 'TOGA_RFN', 'VB', 'VBINJECT',
             'VOBFUS', 'VUNDO', 'WINWEBSEC', 'ZBOT']
 
+dataset = pd.read_csv('all_data2_new.csv')
 
 ##Training model
 from sklearn.model_selection import train_test_split
