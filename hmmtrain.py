@@ -10,7 +10,6 @@ import os
 from hmmlearn import hmm
 import tensorflow as tf
 #import matplotlib.pyplot as plt
-import 
 import pickle
 
 ##Set-up and initializiatio
