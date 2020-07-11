@@ -14,7 +14,6 @@ from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
 Y = le.fit_transform(Y)
 
-
 from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, random_state = 42)
 
@@ -50,10 +49,16 @@ accuracy_score(Y_test, Y_pred)
 
 from sklearn.metrics import confusion_matrix
 families = [ 'ADLOAD', 'AGENT' , 'ALLAPLE_A', 'BHO', 'BIFROSE', 'CEEINJECT', 'CYCBOT_G','FAKEREAN', 'HOTBAR', 'INJECTOR',
-            'LOLYDA_BF', 'ONLINEGAMES', 'RENOS', 'RIMECUD_A', 'SMALL', 'STARTPAGE', 'TOGA_RFN', 'VB', 'VBINJECT',
-            'VOBFUS', 'VUNDO', 'WINTRIM_BX', 'WINWEBSEC', 'ZBOT']
+            'ONLINEGAMES', 'RENOS', 'RIMECUD_A', 'SMALL', 'TOGA_RFN', 'VB', 'VBINJECT',
+            'VOBFUS', 'VUNDO', 'WINWEBSEC', 'ZBOT']
 cm = confusion_matrix(Y_test, Y_pred)
 df_cm = pd.DataFrame(cm, index = [i for i in families],
                   columns = [i for i in families])
-plt.figure(figsize = (25,17.5))
+plt.figure(figsize = (20,14))
 sn.heatmap(df_cm, annot=True)
+
+#Precision, Recall, F1Score
+from sklearn.metrics import precision_recall_fscore_support
+precision_recall_fscore_support(Y_test, Y_pred, average ='micro')
+precision_recall_fscore_support(Y_test, Y_pred, average ='macro')
+precision_recall_fscore_support(Y_test, Y_pred, average ='weighted')
