@@ -37,5 +37,6 @@ model2.fit(X_test)
 all_models = []
 all_models.append(model)
 all_models.append(model2)
+
 predict(testX)
 print(Y_pred)
