@@ -21,7 +21,15 @@ from sklearn.metrics import accuracy_score
 accuracy_score(Y_train, classifier.predict(X_train))
 accuracy_score(Y_test, Y_pred)
 
+#Balanced Accuracy
+from sklearn.metrics import balanced_accuracy_score
+balanced_accuracy_score(Y_train, classifier.predict(X_train))
+balanced_accuracy_score(Y_test, Y_pred)
+
+
 #Precision, Recall, F1Score
 from sklearn.metrics import precision_recall_fscore_support
 precision_recall_fscore_support(Y_test, Y_pred, average ='micro')
 precision_recall_fscore_support(Y_test, Y_pred, average ='macro')
+precision_recall_fscore_support(Y_test, Y_pred, average ='weighted')
+
