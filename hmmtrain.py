@@ -37,7 +37,7 @@ dataset = pd.read_csv('all_data2_new.csv')
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
-testX = np.empty((0,0))
+testX = np.empty((0,0), dtype = np.int8)
 testY = np.empty(0)
 count = 0
 all_models = []
@@ -51,7 +51,7 @@ for i in families:
     testY = np.append(testY, Y_test)
     
     
-    model = hmm.MultinomialHMM(n_components=5, n_iter=100, tol=0.5)
+    model = hmm.MultinomialHMM(n_components=5, n_iter=500, tol=0.5)
     model.fit(X_train)
     all_models.append(model)
     print("done")
@@ -59,5 +59,12 @@ for i in families:
 le = LabelEncoder()
 testY = le.fit_transform(testY)
 
-filename = 'filenalized_model.sav'
+filename = 'finalized_model.sav'
 pickle.dump(all_models, open(filename, 'wb'))
+
+filename = 'X_test.sav'
+pickle.dump(testX, open(filename, 'wb'))
+
+filename = 'Y_test.sav'
+pickle.dump(testY, open(filename, 'wb'))
+
