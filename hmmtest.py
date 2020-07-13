@@ -5,8 +5,8 @@ import pandas as pd
 import seaborn as sn
 
 dataset = pd.read_csv('all_data2_new.csv')
-X = dataset.iloc[:, 34:].values
-Y = dataset.iloc[:, 1].values
+X = dataset.iloc[0:130, 34:].values
+Y = dataset.iloc[0:130, 1].values
 
 from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
@@ -14,6 +14,7 @@ Y = le.fit_transform(Y)
 
 from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, random_state = 42)
+print(X_test.shape)
 
 Y_pred = np.empty(0)
 def predict(data): #data is 2d np array
@@ -26,17 +27,15 @@ def predict(data): #data is 2d np array
             if score > max_prob:
                 best_model = count
             count += 1
-        y_pred = np.append(y_pred, count)
+        Y_pred = np.append(Y_pred, count)
         print(families[count])
 
-#Displaying results
+# Displaying results
 model = hmm.MultinomialHMM(n_components=5, n_iter=100, tol=0.5)
-model.fit(X_test)
-model2 = hmm.MultinomialHMM(n_components=6, n_iter=100, tol=0.5)
-model2.fit(X_test)
-all_models = []
-all_models.append(model)
-all_models.append(model2)
+model.fit(X_train)
+print("done training")
+for row in X_test:
+    row = np.reshape(row, (-1, 1))
+    print(model.score(row))
 
-predict(testX)
-print(Y_pred)
+
