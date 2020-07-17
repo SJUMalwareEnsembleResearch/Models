@@ -67,8 +67,8 @@ for i in families:
     all_models.append(model)
     print(count)
     
-le = LabelEncoder()
-testY = le.fit_transform(testY)
+# le = LabelEncoder()
+# testY = le.fit_transform(testY)
 
 filename = 'finalized_model.sav'
 pickle.dump(all_models, open(filename, 'wb'))
