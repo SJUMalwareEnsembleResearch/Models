@@ -44,14 +44,14 @@ all_models = []
 for i in families:
     X = dataset.iloc[dataSelect2[i][0]:dataSelect2[i][1], 34:]
     Y = dataset.iloc[dataSelect2[i][0]:dataSelect2[i][1], 1]
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, random_state = 42)
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, random_state = 23)
     count += X_test.shape[0]
     
     testX = np.append(testX, X_test).reshape(count, 1000)
     testY = np.append(testY, Y_test)
     
     
-    model = hmm.MultinomialHMM(n_components=5, n_iter=500, tol=0.5)
+    model = hmm.MultinomialHMM(n_components=10, n_iter=200, tol=0.5)
     model.fit(X_train)
     all_models.append(model)
     print("done")

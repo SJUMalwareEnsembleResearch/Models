@@ -5,10 +5,10 @@ families = [ 'ADLOAD', 'AGENT' , 'ALLAPLE_A', 'BHO', 'BIFROSE', 'CEEINJECT', 'CY
             'ONLINEGAMES', 'RENOS', 'RIMECUD_A', 'SMALL', 'TOGA_RFN', 'VB', 'VBINJECT',
             'VOBFUS', 'VUNDO', 'WINWEBSEC', 'ZBOT']
 
-filename = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm_models/5_100_0.5/finalized_model.sav'
-filename2 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm_models/5_100_0.5/X_test.sav'
-filename3 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm_models/5_100_0.5/Y_test.sav'
-filename4 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm_models/5_100_0.5/Y_pred.sav'
+filename = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/Bagging/finalized_model1.sav'
+filename2 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/Bagging/X_test.sav'
+filename3 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/Bagging/Y_test.sav'
+# filename4 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm_models/5_100_0.5/Y_pred.sav'
 all_models = pickle.load(open(filename, 'rb'))
 testX = pickle.load(open(filename2, 'rb'))
 Y_test = pickle.load(open(filename3, 'rb'))
@@ -35,7 +35,7 @@ def predict(data): #data is 2d np array
 #Displaying results
 predict(testX)
 # print(Y_pred)
-pickle.dump(Y_pred, open(filename4, 'wb'))
+# pickle.dump(Y_pred, open(filename4, 'wb'))
 
 from sklearn.metrics import accuracy_score
 print("-------------------------")
