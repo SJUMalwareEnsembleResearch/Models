@@ -39,6 +39,8 @@ from sklearn.preprocessing import LabelEncoder
 
 testX = np.empty((0,0), dtype = np.int8)
 testY = np.empty(0)
+trainX = np.empty((0,0), dtype = np.int8)
+trainY = np.empty(0)
 count = 0
 all_models = []
 for i in families:
@@ -49,22 +51,32 @@ for i in families:
     
     testX = np.append(testX, X_test).reshape(count, 1000)
     testY = np.append(testY, Y_test)
+
+    trainX = np.append(trainX, X_train).reshape(-1, 1000)
+    trainY = np.append(trainY, Y_train)
+
     
     
-    model = hmm.MultinomialHMM(n_components=10, n_iter=200, tol=0.5)
-    model.fit(X_train)
-    all_models.append(model)
-    print("done")
+    # model = hmm.MultinomialHMM(n_components=10, n_iter=200, tol=0.5)
+    # model.fit(X_train)
+    # all_models.append(model)
+    # print("done")
     
 le = LabelEncoder()
-testY = le.fit_transform(testY)
+trainY = le.fit_transform(trainY)
 
-filename = 'finalized_model.sav'
-pickle.dump(all_models, open(filename, 'wb'))
+# filename = 'finalized_model.sav'
+# pickle.dump(all_models, open(filename, 'wb'))
 
-filename = 'X_test.sav'
-pickle.dump(testX, open(filename, 'wb'))
+# filename = 'X_test.sav'
+# pickle.dump(testX, open(filename, 'wb'))
 
-filename = 'Y_test.sav'
-pickle.dump(testY, open(filename, 'wb'))
+# filename = 'Y_test.sav'
+# pickle.dump(testY, open(filename, 'wb'))
+
+filename = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/X_train.sav'
+pickle.dump(trainX, open(filename, 'wb'))
+
+filename = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Y_train.sav'
+pickle.dump(trainY, open(filename, 'wb'))
 
