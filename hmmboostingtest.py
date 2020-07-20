@@ -46,7 +46,7 @@ pickle.dump(Y_pred, open(filename5, 'wb'))
 
 for i in range(7284):
     if(Y[i] != Y_pred[i]):
-        error[i] = np.append(error[i], X[i])
+        error[Y[i]] = np.append(error[Y[i]], X[i])
 
 pickle.dump(error, open(filename4, 'wb'))
 
