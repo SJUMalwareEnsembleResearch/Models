@@ -29,8 +29,9 @@ families = [ 'ADLOAD', 'AGENT' , 'ALLAPLE_A', 'BHO', 'BIFROSE', 'CEEINJECT', 'CY
             'VOBFUS', 'VUNDO', 'WINWEBSEC', 'ZBOT']
 
 dataset = pd.read_csv('all_data2_new.csv')
-
-def subsample(data, existing, ratio=1.0):
+file = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Boosting/errors1.sav'
+errors = pickle.load(open(file, 'rb'))
+def dataBuild(data, existing, ratio=1.0):
 	sample = np.copy(existing).reshape(-1, 1)
 	n_sample = round(len(data) * ratio * 1000)
 	while len(sample) < n_sample:
@@ -43,7 +44,8 @@ def subsample(data, existing, ratio=1.0):
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
-test = np.empty((0,0), dtype = np.int8)
+train = np.empty((0,0), dtype = np.int8)
+trainY = np.empty((0,0), dtype = np.int8)
 count = 0
 all_models = []
 for i in families:
@@ -51,24 +53,25 @@ for i in families:
     X = dataset.iloc[dataSelect2[i][0]:dataSelect2[i][1], 34:]
     Y = dataset.iloc[dataSelect2[i][0]:dataSelect2[i][1], 1]
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, random_state = 23)
-    count += 1
+    
     
     test = np.empty((0,0), dtype = np.int8)
-    baggingSample = subsample(X_train, test, ratio=0.6).reshape(-1, 1000)
+    test = dataBuild(X_train, errors[count], ratio=0.6).reshape(-1, 1000)
     print(X_train.shape)
-    print(baggingSample.shape)
-    test = np.append(test, baggingSample).reshape(-1, 1000)
+    print(test.shape)
+    train = np.append(test, test).reshape(-1, 1000)
     
     model = hmm.MultinomialHMM(n_components=10, n_iter=200, tol=0.5)
-    model.fit(baggingSample)
+    model.fit(test)
     all_models.append(model)
     print(count)
+    count += 1
     
-le = LabelEncoder()
-testY = le.fit_transform(testY)
+# le = LabelEncoder()
+# testY = le.fit_transform(testY)
 
-filename = 'finalized_model.sav'
+filename = 'finalized_model2.sav'
 pickle.dump(all_models, open(filename, 'wb'))
 
-filename = 'X_test.sav'
-pickle.dump(test, open(filename, 'wb'))
+filename = 'X_train2.sav'
+pickle.dump(train, open(filename, 'wb'))
