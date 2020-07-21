@@ -8,9 +8,9 @@ families = [ 'ADLOAD', 'AGENT' , 'ALLAPLE_A', 'BHO', 'BIFROSE', 'CEEINJECT', 'CY
         'ONLINEGAMES', 'RENOS', 'RIMECUD_A', 'SMALL', 'TOGA_RFN', 'VB', 'VBINJECT',
         'VOBFUS', 'VUNDO', 'WINWEBSEC', 'ZBOT']
 
-file = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/Bagging/finalized_model'
-fileX = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/Bagging/X_test.sav'
-fileY = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/Bagging/Y_test.sav'
+file = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Bagging/finalized_model'
+fileX = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Bagging/X_test.sav'
+fileY = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Bagging/Y_test.sav'
 
 X_test = pickle.load(open(fileX, 'rb'))
 Y_test = pickle.load(open(fileY, 'rb'))
@@ -32,15 +32,22 @@ def predict(row, modelFile): #data is 2d np array
                 best_model = count
         except:
             continue
+    global scores
+    scores[best_model] += bestScore
     return best_model
 
 def checkPred(array):
     bestScore = -1
+    count = -1
     best_model = -1
     for i in range(21):
-        if array[i] > bestScore:
-            bestScore = array[i]
+        if array[i] > count:
+            count = array[i]
             best_model = i
+            bestScore = scores[i]
+        elif array[i] == count and scores[i] > bestScore:
+            best_model = i
+            bestScore = scores[i]
     return best_model
 
 
@@ -55,7 +62,7 @@ for row in X_test: #change later
     print(families[final_Pred])
     array = [0] * 21
 
-filename4 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/Bagging/Y_pred.sav'
+filename4 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Bagging/Y_pred.sav'
 # print(Y_pred)
 pickle.dump(Y_pred, open(filename4, 'wb'))
 

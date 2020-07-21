@@ -8,9 +8,9 @@ families = [ 'ADLOAD', 'AGENT' , 'ALLAPLE_A', 'BHO', 'BIFROSE', 'CEEINJECT', 'CY
         'ONLINEGAMES', 'RENOS', 'RIMECUD_A', 'SMALL', 'TOGA_RFN', 'VB', 'VBINJECT',
         'VOBFUS', 'VUNDO', 'WINWEBSEC', 'ZBOT']
 
-file = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/Bagging/finalized_model'
-fileX = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/Bagging/X_test.sav'
-fileY = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/Bagging/Y_test.sav'
+file = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Bagging/finalized_model'
+fileX = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Bagging/X_test.sav'
+fileY = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Bagging/Y_test.sav'
 
 X_test = pickle.load(open(fileX, 'rb'))
 Y_test = pickle.load(open(fileY, 'rb'))
@@ -42,12 +42,13 @@ def checkPred(array):
 
 
 for row in X_test: #change later
-    for i in range(1,6):
+    for i in range(1,3):
         modelFile = file + str(i) + '.sav'
         predict(row, modelFile)
     final_Pred = checkPred(scores)
     Y_pred = np.append(Y_pred, final_Pred)
     print(families[final_Pred])
+    print(scores)
     scores = [0] * 21
 
         
@@ -57,7 +58,7 @@ for row in X_test: #change later
         
     
     
-filename4 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/Bagging/Y_pred.sav'
+filename4 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Bagging/Y_pred.sav'
 # print(Y_pred)
 pickle.dump(Y_pred, open(filename4, 'wb'))
 
