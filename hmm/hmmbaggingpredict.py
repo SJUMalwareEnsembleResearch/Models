@@ -9,8 +9,8 @@ families = [ 'ADLOAD', 'AGENT' , 'ALLAPLE_A', 'BHO', 'BIFROSE', 'CEEINJECT', 'CY
         'VOBFUS', 'VUNDO', 'WINWEBSEC', 'ZBOT']
 
 file = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Bagging/finalized_model'
-fileX = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Bagging/X_test.sav'
-fileY = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Bagging/Y_test.sav'
+fileX = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/X_train.sav'
+fileY = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Y_train.sav'
 
 X_test = pickle.load(open(fileX, 'rb'))
 Y_test = pickle.load(open(fileY, 'rb'))
@@ -62,7 +62,7 @@ for row in X_test: #change later
     print(families[final_Pred])
     array = [0] * 21
 
-filename4 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Bagging/Y_pred.sav'
+filename4 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Bagging/Y_pred5_train.sav'
 # print(Y_pred)
 pickle.dump(Y_pred, open(filename4, 'wb'))
 

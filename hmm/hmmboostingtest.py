@@ -8,8 +8,8 @@ families = [ 'ADLOAD', 'AGENT' , 'ALLAPLE_A', 'BHO', 'BIFROSE', 'CEEINJECT', 'CY
 file = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Boosting/finalized_model'
 filename2 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/X_train.sav'
 filename3 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Y_train.sav'
-filename4 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Boosting/errors3.sav'
-filename5 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Boosting/Y_pred3.sav'
+filename4 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Boosting/errors5.sav'
+filename5 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Boosting/Y_pred5.sav'
 X = pickle.load(open(filename2, 'rb'))
 Y = pickle.load(open(filename3, 'rb'))
 print(X.shape)
@@ -55,7 +55,7 @@ def checkPred(array):
 # print(Y_pred)
 
 for row in X: #change later
-    for i in range(1,4):
+    for i in range(1,6):
         modelFile = file + str(i) + '.sav'
         pred = predict(row, modelFile)
         array[pred] += 1
