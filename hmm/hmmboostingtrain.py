@@ -29,7 +29,7 @@ families = [ 'ADLOAD', 'AGENT' , 'ALLAPLE_A', 'BHO', 'BIFROSE', 'CEEINJECT', 'CY
             'VOBFUS', 'VUNDO', 'WINWEBSEC', 'ZBOT']
 
 dataset = pd.read_csv('all_data2_new.csv')
-file = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Boosting/errors3.sav'
+file = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm/Boosting/errors4.sav'
 errors = pickle.load(open(file, 'rb'))
 def dataBuild(data, existing, ratio=1.0):
 	sample = np.copy(existing).reshape(-1, 1)
@@ -70,8 +70,8 @@ for i in families:
 # le = LabelEncoder()
 # testY = le.fit_transform(testY)
 
-filename = 'finalized_model4.sav'
+filename = 'finalized_model5.sav'
 pickle.dump(all_models, open(filename, 'wb'))
 
-filename = 'X_train4.sav'
+filename = 'X_train5.sav'
 pickle.dump(train, open(filename, 'wb'))
