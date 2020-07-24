@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import tensorflow as tf
 print(len(tf.config.experimental.list_physical_devices('GPU')))
+import pickle
 
 config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -43,20 +44,24 @@ lstm = tf.keras.models.Sequential()
 lstm.add(tf.keras.layers.LSTM(128, input_shape = (1000, 1), activation = 'relu', return_sequences = True))
 
 #Second Layer
-lstm.add(tf.keras.layers.LSTM(128, input_shape = (1000, 1), activation = 'relu'))
+# lstm.add(tf.keras.layers.LSTM(128, input_shape = (1000, 1), activation = 'relu'))
 
-#Third Layer
-lstm.add(tf.keras.layers.Dense(64, activation = 'relu'))
+# #Third Layer
+# lstm.add(tf.keras.layers.Dense(64, activation = 'relu'))
 
-#Third Layer
-lstm.add(tf.keras.layers.Dense(64, activation = 'relu'))
+# #Third Layer
+# lstm.add(tf.keras.layers.Dense(64, activation = 'relu'))
 
 #Output Layer
 lstm.add(tf.keras.layers.Dense(units=24, activation='softmax')) # change activation to soft-max?
 
 # Training the lstm on the Training set and evaluating it on the Test set
 lstm.compile(optimizer = 'SGD', loss = 'sparse_categorical_crossentropy', metrics = ['accuracy'])
-lstm.fit(X, Y, epochs = 10, validation_split = 0.25, batch_size = 250) ##need to change
+lstm.fit(X, Y, epochs = 1, validation_split = 0.25, batch_size = 250) ##need to change
+
+filename = 'lstm.sav'
+pickle.dump(lstm, open(filename, 'wb'))
+
 
 # model = Sequential()
 # model.add(Conv1D(filters= 32, kernel_size=3, activation ='relu', input_shape= (1000, 1)))

@@ -54,7 +54,7 @@ cnn.add(tf.keras.layers.Dense(units=24, activation='softmax')) # change activati
 
 # Training the CNN on the Training set and evaluating it on the Test set
 cnn.compile(optimizer = 'adam', loss = 'sparse_categorical_crossentropy', metrics = ['accuracy'])
-cnn.fit(X, Y, epochs = 100, validation_split = 0.25, batch_size = 1000) ##need to change
+cnn.fit(X, Y, epochs = 1, validation_split = 0.25, batch_size = 1000) ##need to change
 
 def plot_graphs(history, best):
   plt.figure(figsize=[10,4])
