@@ -13,7 +13,7 @@ filename5 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hm
 X = pickle.load(open(filename2, 'rb'))
 Y = pickle.load(open(filename3, 'rb'))
 print(X.shape)
-Y_pred = np.empty(0, dtype=np.int8)
+asd
 error = [np.empty((0,0), dtype = np.int8)] * 21
 scores = [0] * 21
 array = [0] * 21
