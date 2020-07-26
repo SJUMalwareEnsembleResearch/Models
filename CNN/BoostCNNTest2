@@ -1,0 +1,12 @@
+Y_pred = np.empty(0, dtype=np.int8)
+for i in range(7780):
+    predFile = "/kaggle/working/y_pred"
+    array = [0] * 21
+    for j in range (0,1):
+        file = predFile + str(j) + ".sav"
+        y_pred = pickle.load(open(file, 'rb'))
+        array[y_pred[i]] += 1
+    final_Pred = checkPred(array)
+    Y_pred = np.append(Y_pred, final_Pred)
+    print(families[final_Pred])
+    array = [0] * 21
