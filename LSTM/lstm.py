@@ -6,11 +6,12 @@ Created on Wed Jun 24 18:59:31 2020
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 import tensorflow as tf
-print(len(tf.config.experimental.list_physical_devices('GPU')))
-import pickle
+import tensorflow.keras
+from tensorflow.keras.models import Sequential 
+from tensorflow.keras.layers import Activation, MaxPooling1D, Dropout, Flatten, Reshape, Dense, Conv1D, LSTM, SpatialDropout1D
+from tensorflow.keras.wrappers.scikit_learn import KerasClassifier
 
 config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -23,44 +24,33 @@ if tf.test.gpu_device_name():
 else:
    print("Please install GPU version of TF")
 
-dataset = pd.read_csv('all_data2_new.csv')
-X = dataset.iloc[:, 34:]
-Y = dataset.iloc[:, 1]
-X = X/30 #Check if there are 30 different opcodes
-X = np.expand_dims(X, 2)
-print(X.shape)
+df = pd.read_csv('all_data2_new.csv')
+#Getting X and Y Data
+X = df.iloc[:, 34:]
+Y = df.iloc[:, 1]
 
 from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
 Y = le.fit_transform(Y)
 
-    #Initializing LSTM
-lstm = tf.keras.models.Sequential()
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size = 0.2, random_state = 23)
 
-#add dropout?
-#lstm.add(Dropout(0.2))
+print(X_test.shape)
+X_train = tf.reshape(X_train, (X_train.shape[0], 1000, 1))
+X_test = tf.reshape(X_test, (X_test.shape[0], 1000, 1))
+print(X_train.shape)
 
-#First Layer
-lstm.add(tf.keras.layers.LSTM(128, input_shape = (1000, 1), activation = 'relu', return_sequences = True))
 
-#Second Layer
-# lstm.add(tf.keras.layers.LSTM(128, input_shape = (1000, 1), activation = 'relu'))
+#Initializing LSTM
 
-# #Third Layer
-# lstm.add(tf.keras.layers.Dense(64, activation = 'relu'))
+model = Sequential()
+model.add(LSTM(32, input_shape=(1000, 1)))
+model.add(Dropout(0.2))
+model.add(Dense(21,activation='softmax'))
+model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-# #Third Layer
-# lstm.add(tf.keras.layers.Dense(64, activation = 'relu'))
-
-#Output Layer
-lstm.add(tf.keras.layers.Dense(units=24, activation='softmax')) # change activation to soft-max?
-
-# Training the lstm on the Training set and evaluating it on the Test set
-lstm.compile(optimizer = 'SGD', loss = 'sparse_categorical_crossentropy', metrics = ['accuracy'])
-lstm.fit(X, Y, epochs = 1, validation_split = 0.25, batch_size = 250) ##need to change
-
-filename = 'lstm.sav'
-pickle.dump(lstm, open(filename, 'wb'))
+model.fit(X_train, y_train, epochs = 21,batch_size=1,validation_data = (X_test, y_test), shuffle = True)
 
 
 # model = Sequential()
