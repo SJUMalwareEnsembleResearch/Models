@@ -85,7 +85,7 @@ for i in range(0,1):
 
     loaded_model = tf.keras.models.model_from_json(loaded_model_json)
     h5File = modelFile + '.h5'
-    loaded_model.load_weights(h5)
+    loaded_model.load_weights(h5File)
     
     preds = loaded_model.predict_classes(X_test)
     print(preds.shape)
