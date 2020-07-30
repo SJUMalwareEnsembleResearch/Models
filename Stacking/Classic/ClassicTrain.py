@@ -19,8 +19,8 @@ import pickle
 predictions = []
 
 dataset = pd.read_csv('all_data2_new.csv')
-X = dataset.iloc[:, 34:].values
-Y = dataset.iloc[:, 1].values
+X = dataset.iloc[:, 34:]
+Y = dataset.iloc[:, 1]
 
 from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
@@ -30,17 +30,34 @@ from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.20, random_state = 42)
 
 #Random Forest
-rf_file = "D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\Stacking\\Classic\\RF, Ada, XG\\random_forest_model.sav"
+rf_file = "D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\Stacking\\Classic\\RF,Ada,XG\\random_forest_model.sav"
 rf_model = pickle.load(open(rf_file, 'rb'))
 rf_pred = rf_model.predict(X_test)
+from sklearn.metrics import accuracy_score
+accuracy_score(Y_test, rf_pred)
 
-#Adaboost
+#XGBoost
 D_train = xgb.DMatrix(X_train, label= Y_train)
 D_test = xgb.DMatrix(X_test, label=Y_test)
-xg_file = "D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\Stacking\\Classic\\RF, Ada, XG\\xgboost_model.sav"
+xg_file = "D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\Stacking\\Classic\\RF,Ada,XG\\xgboost_model.sav"
 xg_model = pickle.load(open(xg_file, 'rb'))
 pred = xg_model.predict(D_test)
 xg_pred = np.asarray([np.argmax(line) for line in pred])
+from sklearn.metrics import accuracy_score
+accuracy_score(Y_test, xg_pred)
+
+
+#Rechanging the Data
+dataset = pd.read_csv('all_data2_new.csv')
+X = dataset.iloc[:, 34:].values
+Y = dataset.iloc[:, 1].values
+
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+Y = le.fit_transform(Y)
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.20, random_state = 42)
 
 #HMM
 def predict(X_test, modelFile): #data is 2d np array
@@ -70,7 +87,7 @@ hmmbag_pred = np.empty(0, dtype=np.int32)
 for i in range(1,6):
     modelFile = hmmbag_file + str(i) + '.sav'
     hmmbag_pred = np.append(hmmbag_pred, predict(X_test, modelFile))
-    print()
+    print("done")
 hmmbag_pred = np.reshape(hmmbag_pred, (5, -1))
 hmmbag_pred = hmmbag_pred.transpose()
 
