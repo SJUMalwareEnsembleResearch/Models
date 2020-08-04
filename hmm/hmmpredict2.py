@@ -13,10 +13,10 @@ filename2 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hm
 filename3 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm_models/5_200_0.5/Y_test.sav'
 filename4 = '/Users/gavinwong/Desktop/Repos/SJUMalwareEnsembleResearch/Models/hmm_models/5_200_0.5/Y_pred.sav'
 
-filename =  'D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\hmm\\hmm_models\\10_200_0.5\\finalized_model.sav'
-filename2 = 'D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\hmm\\hmm_models\\10_200_0.5\\X_test.sav'
-filename3 = 'D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\hmm\\Boosting\\Y_test.sav'
-filename4 = 'D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\hmm\\Boosting\\Y_pred5_test.sav'
+filename =  'D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\hmm\\hmm_models\\10_200_0.5\\Y_test.sav'
+filename2 = 'D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\hmm\\hmm_models\\10_200_0.5\\Y_pred.sav'
+filename3 = 'D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\hmm\\Bagging\\Y_test.sav'
+filename4 = 'D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\hmm\\Bagging\\Y_pred_best.sav'
 
 all_models = pickle.load(open(filename, 'rb'))
 testX = pickle.load(open(filename2, 'rb'))
@@ -38,7 +38,7 @@ precision_recall_fscore_support(Y_test, Y_pred, average ='weighted')
 #Confusion Matrix #2
 from collections import Counter
 from sklearn import metrics
-mapping = Counter(Y_pred)
+mapping = Counter(Y_test)
 #print(Counter(y_test))
 mapping = dict(sorted(mapping.items()))
 #--- 259.12324500083923 seconds ---
@@ -48,7 +48,7 @@ label_map = {"0":"ADLOAD","1":"AGENT","2":"ALLAPLE_A","3":"BHO","4":"BIFROSE","5
 #print(y_test)
 
 def write_cm(cm):
-    file = open("D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\cm_txt\\rf800.txt","w")
+    file = open("D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\cm\\baghmm.txt","w")
     for y in range(0, 21):
         for x in range(0, 21):
             string = (str(x) + " " + str(y) + " "+ str(round(cm[y][x],4)))
