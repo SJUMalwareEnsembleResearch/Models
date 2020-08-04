@@ -104,16 +104,24 @@ hmmboost_pred = hmmboost_pred.transpose()
 all_predictions = np.empty(0, dtype=np.int8)
 for i in range(1945):
     all_predictions = np.append(all_predictions, rf_pred[i])
+    all_predictions = np.append(all_predictions, rf_pred[i])
+    all_predictions = np.append(all_predictions, rf_pred[i])
+    all_predictions = np.append(all_predictions, rf_pred[i])
+    all_predictions = np.append(all_predictions, rf_pred[i])
+    all_predictions = np.append(all_predictions, xg_pred[i])
+    all_predictions = np.append(all_predictions, xg_pred[i])
+    all_predictions = np.append(all_predictions, xg_pred[i])
+    all_predictions = np.append(all_predictions, xg_pred[i])
     all_predictions = np.append(all_predictions, xg_pred[i])
     all_predictions = np.append(all_predictions, hmmbag_pred[i])
     all_predictions = np.append(all_predictions, hmmboost_pred[i])
-all_predictions = np.reshape(all_predictions, (-1, 12))
+all_predictions = np.reshape(all_predictions, (-1, 20))
 
 def findMode(array):
     arr = [0] * 21
     bestScore = -1
     best_model = -1
-    for i in range(12): #need to change
+    for i in range(20): #need to change
         arr[array[i]] += 1
         print(arr)
         if (arr[array[i]] > bestScore):
@@ -130,9 +138,10 @@ def checkPred(array):
 
 Y_pred = checkPred(all_predictions)
 
-pred_file = "D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\Stacking\\Classic\\all_predictions.sav"
-pred_file2 = "D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\Stacking\\Classic\\y_pred.sav"
+pred_file = "D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\Stacking\\Classic\\all_predictions5.sav"
+pred_file2 = "D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\Stacking\\Classic\\y_pred5.sav"
 
+Y_pred = pickle.load(open(pred_file2, 'rb'))
 pickle.dump(all_predictions, open(pred_file, 'wb'))
 pickle.dump(Y_pred, open(pred_file2, 'wb'))
 
@@ -153,7 +162,7 @@ precision_recall_fscore_support(Y_test, Y_pred, average ='weighted')
 
 from collections import Counter
 from sklearn import metrics
-mapping = Counter(Y_pred)
+mapping = Counter(Y_test)
 #print(Counter(y_test))
 mapping = dict(sorted(mapping.items()))
 #--- 259.12324500083923 seconds ---
@@ -163,7 +172,7 @@ label_map = {"0":"ADLOAD","1":"AGENT","2":"ALLAPLE_A","3":"BHO","4":"BIFROSE","5
 #print(y_test)
 
 def write_cm(cm):
-    file = open("D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\cm\\cm_classic.txt","w")
+    file = open("D:\\Repos\\SJUMalwareEnsembleResearch\\Models\\cm\\classic.txt","w")
     for y in range(0, 21):
         for x in range(0, 21):
             string = (str(x) + " " + str(y) + " "+ str(round(cm[y][x],4)))
